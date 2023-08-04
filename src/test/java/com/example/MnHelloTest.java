@@ -15,6 +15,7 @@ class MnHelloTest {
 
     @Test
     void testItWorks() {
+
         Assertions.assertTrue(application.isRunning());
     }
 
