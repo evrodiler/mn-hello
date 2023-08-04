@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: mnHello
+  server:
+    port: $(SERVER_PORT:8090}
