@@ -1,5 +1,6 @@
 package com.example;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
@@ -29,6 +30,20 @@ public class HelloWorldControllerTest {
         var response = client.toBlocking().exchange("/hello", String.class); //returns status also
         assertEquals(HttpStatus.OK, response.getStatus());
         assertEquals("Hello from Service", response.getBody().get());
+    }
+    @Test
+    void helloFromConfigEndpointReturnsMessageFromConfigFile()
+    {
+        var response =  client.toBlocking().exchange("/hello/config", String.class);
+        assertEquals(HttpStatus.OK, response.getStatus());
+        assertEquals("Hello from application.yml", response.getBody().get());
+    }
+    @Test
+    void helloFromTranslationEndpointReturnsMessageFromConfigFile()
+    {
+        var response = client.toBlocking().exchange("/hello/translation", JsonNode.class);
+        assertEquals(HttpStatus.OK, response.getStatus());
+        assertEquals("{\"de\":\"Hallo Welt\",\"en\":\"Hello World\"}", response.getBody().get().toString());
     }
 
 }
